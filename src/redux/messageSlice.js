@@ -12,10 +12,12 @@ const messageSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    
+    messageAdded(state, action) {
+      state.push({...action.payload, id: Math.floor(Math.random() * 1000)})
+    },
   },
 });
 
-export const {  } = messageSlice.actions
+export const { messageAdded } = messageSlice.actions
 
 export default messageSlice.reducer
