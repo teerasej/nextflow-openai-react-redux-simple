@@ -7,7 +7,7 @@ function Chatroom() {
   const publishedMessage = useSelector(state => state.messages);
 
   const renderedMessage = publishedMessage.map(message => (
-    <ChatMessage sender={message.sender} message={message.message}/>
+    <ChatMessage key={message.id} sender={message.sender} message={message.message}/>
   ))
 
   return (

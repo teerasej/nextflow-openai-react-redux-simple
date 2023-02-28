@@ -2,8 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = [
-  { sender: 'User', message: 'Hello' },
-  { sender: 'GPT', message: 'Hi!' }
+  { id: 1, sender: 'User', message: 'Hello' },
+  { id: 2, sender: 'GPT', message: 'Hi!' }
 ]
 
 
