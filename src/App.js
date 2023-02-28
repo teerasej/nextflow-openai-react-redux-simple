@@ -1,5 +1,7 @@
 import './App.css';
 import { Container, Row, Col } from 'react-bootstrap';
+import Chatroom from './components/chatroom/Chatroom';
+import PromptInput from './components/promptinput/PromptInput';
 
 function App() {
   return (
@@ -10,9 +12,9 @@ function App() {
         </Col>
       </Row>
       {/* Chatroom */}
-
+      <Chatroom/>
       {/* PromptInput */}
-
+      <PromptInput/>
     </Container>
   );
 }
