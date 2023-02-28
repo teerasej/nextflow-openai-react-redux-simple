@@ -2,12 +2,9 @@
 import React from 'react'
 import { Container, Row } from 'react-bootstrap';
 import ChatMessage from './ChatMessage'
+import { useSelector } from 'react-redux';
 function Chatroom() {
-
-  const publishedMessage = [
-    { sender: 'User' , message:'Hello'},
-    { sender: 'GPT' , message:'Hi'}
-  ];
+  const publishedMessage = useSelector(state => state.messages);
 
   const renderedMessage = publishedMessage.map(message => (
     <ChatMessage sender={message.sender} message={message.message}/>
