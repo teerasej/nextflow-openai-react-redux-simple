@@ -1,0 +1,16 @@
+
+
+.msg-bubble {
+    
+    margin-bottom: 5px;
+    background-color: darkgrey;
+} 
+
+.msg-bubble .sender {
+    padding: 10px;
+    background-color: grey;
+}
+
+.msg-bubble .message {
+    padding: 10px;
+}
