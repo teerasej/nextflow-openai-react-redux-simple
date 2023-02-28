@@ -4,12 +4,22 @@ import { Container, Row } from 'react-bootstrap';
 import ChatMessage from './ChatMessage'
 function Chatroom() {
 
+  const publishedMessage = [
+    { sender: 'User' , message:'Hello'},
+    { sender: 'GPT' , message:'Hi'}
+  ];
+
+  const renderedMessage = publishedMessage.map(message => (
+    <ChatMessage sender={message.sender} message={message.message}/>
+  ))
+
   return (
     <Row>
         <Container>
           <div className="chatroom">
-            <ChatMessage sender="User" message="Hi"/>
-            <ChatMessage sender="GPT" message="Hello"/>
+            {
+              renderedMessage
+            }
           </div>
         </Container>
     </Row>
