@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 
 
-const key = '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';
+const key = '';
 
 const initialState = [
   { id: 1, sender: 'User', message: 'Hello' },
@@ -38,6 +38,7 @@ export const fetchOpenAI = createAsyncThunk(
         }
       });
 
+      console.log(response)
 
     return response.data.choices[0].text;
   }
