@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { messageAdded } from '../../redux/messageSlice';
+import { fetchOpenAI, messageAdded } from '../../redux/messageSlice';
 import { Controller, useForm } from 'react-hook-form';
 
 function PromptInput() {
@@ -18,6 +18,9 @@ function PromptInput() {
                 message: data.message
             })
         )
+
+
+        dispatch(fetchOpenAI(data.message))
 
         reset();
     };

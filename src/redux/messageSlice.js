@@ -1,11 +1,47 @@
 
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios';
+
+
+const key = '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';
 
 const initialState = [
   { id: 1, sender: 'User', message: 'Hello' },
   { id: 2, sender: 'GPT', message: 'Hi!' }
 ]
 
+export const fetchOpenAI = createAsyncThunk(
+  'user/fetchOpenAI',
+  async (prompt) => {
+
+    console.log('fetching openAI')
+
+    const jsonPrompt = JSON.stringify({
+      "model": "text-davinci-003",
+      "prompt": `${prompt}\n\n>`,
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "top_p": 1,
+      "frequency_penalty": 0,
+      "presence_penalty": 0
+    });
+
+    console.log(jsonPrompt)
+
+    const response = await axios.post(
+      'https://api.openai.com/v1/completions',
+      jsonPrompt,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${key}`
+        }
+      });
+
+
+    return response.data.choices[0].text;
+  }
+);
 
 
 const messageSlice = createSlice({
@@ -15,6 +51,18 @@ const messageSlice = createSlice({
     messageAdded(state, action) {
       state.push({...action.payload, id: Math.floor(Math.random() * 1000)})
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchOpenAI.fulfilled, (state, action) => {
+        console.log('succeeded');
+        state.push({ sender:'GPT', message: action.payload, id: Math.floor(Math.random() * 1000)})
+        
+      })
+      .addCase(fetchOpenAI.rejected, (state, action) => {
+        console.log('failed');
+        console.error(action.error.message);
+      });
   },
 });
 
