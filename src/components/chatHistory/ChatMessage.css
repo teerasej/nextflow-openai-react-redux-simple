@@ -1,0 +1,38 @@
+.chatroom {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.msg-bubble {
+    
+    margin-bottom: 5px;
+    background-color: darkgrey;
+} 
+
+.msg-bubble .sender {
+    padding: 10px;
+    background-color: grey;
+}
+
+.msg-bubble .message {
+    padding: 10px;
+}
+
+.msg-bubble.user {
+    background-color: lightblue;
+}
+
+.msg-bubble.user .sender {
+    background-color: blue;
+    color: white;
+}
+
+.msg-bubble.gpt {
+    background-color: lightgreen;
+}
+
+.msg-bubble.gpt .sender {
+    background-color: green;
+    color: white;
+}

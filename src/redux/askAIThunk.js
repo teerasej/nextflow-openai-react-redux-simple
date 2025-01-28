@@ -1,0 +1,68 @@
+// src/redux/askAIThunk.js
+
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios';
+
+// import useSelector เพื่อดึง chat history จาก redux store มาใช้
+import { useSelector } from 'react-redux';
+
+const key = '98db6ffc7e3447678d4ee3ba4ec3d45a';
+
+export const askAI = createAsyncThunk(
+  'user/askAI',
+
+ 
+  async (prompt, { getState }) => {
+
+    console.log('fetching openAI')
+
+    // ดึง chat history จาก redux store
+    const chatHistory = getState().chatroom.chatHistory;
+
+    // สร้าง JSON object ในการส่งไปที่ OpenAI API
+    const jsonPrompt = JSON.stringify({
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an AI assistant that helps people find information."
+        },
+        // ส่วนนี้คือการส่ง chat history ทั้งหมดไปให้ OpenAI API
+        ...chatHistory.map(chatMessage => ({
+            role: chatMessage.sender === 'User' ? 'user' : 'assistant',
+            content: chatMessage.text
+        })),
+        // จากนั้นเพิ่มข้อความใหม่ที่ผู้ใช้พิมพ์เข้าไป
+        {
+            role: 'user',
+            content: prompt
+        }
+      ],
+      "temperature": 0.7,
+      "top_p": 0.95,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "max_tokens": 800,
+      "stop": null
+    });
+
+    console.log('Sending prompt:')
+    console.log(jsonPrompt)
+
+    const response = await axios.post(
+      'https://openai-nextflow.openai.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-02-15-preview',
+      jsonPrompt,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': key
+        }
+      });
+
+    console.log('got response:')
+    console.log(response)
+    console.log(response.data.choices[0].message.content);
+
+    return response.data.choices[0].message.content;
+
+  }
+);
