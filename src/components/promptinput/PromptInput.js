@@ -9,7 +9,8 @@ function PromptInput() {
     const dispatch = useDispatch();
     const { control, handleSubmit, reset } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = (data, event) => {
+        event.preventDefault();
 
         console.log(data);
         dispatch(
